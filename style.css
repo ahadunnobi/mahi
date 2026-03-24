@@ -46,6 +46,12 @@ body {
   padding: 0 40px;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
 /* Header & Nav */
 header {
   height: var(--header-height);
@@ -100,11 +106,10 @@ nav {
 
 /* Section Common */
 section {
-  padding: 100px 0;
+  padding: 60px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   position: relative;
 }
 
@@ -132,8 +137,8 @@ section {
 
 /* Hero */
 .hero {
-  min-height: 100vh;
-  padding-top: var(--header-height);
+  padding-top: calc(var(--header-height) + 60px);
+  padding-bottom: 40px;
 }
 
 .hero .mono {
@@ -386,9 +391,57 @@ footer {
 @media (max-width: 768px) {
   .about-content {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
 
   .profile-wrapper {
     margin: 0 auto;
+    max-width: 250px;
+  }
+  
+  .project-card {
+    width: calc(50% - 20px);
+  }
+  
+  .contact-content .title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-links {
+    gap: 15px;
+  }
+  
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+  
+  nav {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  
+  header {
+    height: auto;
+    padding-bottom: 15px;
+  }
+
+  .hero {
+    padding-top: calc(var(--header-height) + 40px);
+  }
+
+  .project-card {
+    width: 100%;
+  }
+
+  .contact-item {
+    padding: 15px 20px;
+  }
+  
+  .contact-cards {
+    flex-direction: column;
+    align-items: center;
   }
 }
