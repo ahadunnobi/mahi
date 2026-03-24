@@ -30,16 +30,9 @@ window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll <= 0) {
         header.style.boxShadow = 'none';
-        header.style.height = '100px';
+        header.style.background = 'rgba(10, 25, 47, 0.85)';
     } else {
         header.style.boxShadow = '0 10px 30px -10px rgba(2, 12, 27, 0.7)';
-        header.style.height = '80px';
+        header.style.background = 'rgba(10, 25, 47, 0.95)';
     }
-    
-    if (currentScroll > lastScroll && currentScroll > 100) {
-        header.style.top = '-100px';
-    } else {
-        header.style.top = '0';
-    }
-    lastScroll = currentScroll;
 });
