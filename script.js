@@ -1,4 +1,3 @@
-// Reveal animations on scroll
 const revealOnScroll = () => {
     const sections = document.querySelectorAll('section');
     const windowHeight = window.innerHeight;
@@ -12,7 +11,6 @@ const revealOnScroll = () => {
     });
 };
 
-// Initial state for sections
 document.querySelectorAll('section').forEach(section => {
     section.style.opacity = '0';
     section.style.transform = 'translateY(20px)';
@@ -22,7 +20,6 @@ document.querySelectorAll('section').forEach(section => {
 window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
-// Header hide/show on scroll
 let lastScroll = 0;
 const header = document.querySelector('header');
 
@@ -37,20 +34,14 @@ window.addEventListener('scroll', () => {
     }
 });
 
-
-// --- Interactive JavaScript ---
-
-// 1. GitHub routing for project cards
 document.querySelectorAll('.project-card').forEach(card => {
     card.addEventListener('click', (e) => {
-        // Prevent triggering if clicked on a specific link inside the card
         if(e.target.closest('a')) return;
         const repo = card.getAttribute('data-repo');
         if(repo) window.open(repo, '_blank');
     });
 });
 
-// 2. Gmail routing specifically to a compose draft
 const emailBtn = document.getElementById('email-btn');
 if(emailBtn) {
     emailBtn.addEventListener('click', (e) => {
@@ -59,7 +50,6 @@ if(emailBtn) {
     });
 }
 
-// 3. Mouse glow effect on project cards
 document.getElementById('projects').addEventListener('mousemove', e => {
     for(const card of document.querySelectorAll('.project-card')) {
         const rect = card.getBoundingClientRect(),
@@ -71,7 +61,6 @@ document.getElementById('projects').addEventListener('mousemove', e => {
     }
 });
 
-// 4. Typewriter effect for the hero subtitle
 const textToType = 'I build things for the web.';
 const typeWriterElement = document.getElementById('typewriter');
 if(typeWriterElement) {
