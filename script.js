@@ -1,43 +1,45 @@
 // Reveal animations on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0) scale(1)';
+const revealOnScroll = () => {
+    const sections = document.querySelectorAll('section');
+    const windowHeight = window.innerHeight;
+    
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop < windowHeight * 0.8) {
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
         }
     });
-}, observerOptions);
+};
 
-document.querySelectorAll('.bento-item').forEach((el, index) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px) scale(0.98)';
-    el.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.1}s`;
-    observer.observe(el);
+// Initial state for sections
+document.querySelectorAll('section').forEach(section => {
+    section.style.opacity = '0';
+    section.style.transform = 'translateY(20px)';
+    section.style.transition = 'all 0.8s ease-out';
 });
 
-// Subtle tilt effect on mouse move for the hero card
-const heroCard = document.querySelector('.hero-card');
-if (heroCard) {
-    heroCard.addEventListener('mousemove', (e) => {
-        const rect = heroCard.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-        
-        heroCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-    });
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
+
+// Header hide/show on scroll
+let lastScroll = 0;
+const header = document.querySelector('header');
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll <= 0) {
+        header.style.boxShadow = 'none';
+        header.style.height = '100px';
+    } else {
+        header.style.boxShadow = '0 10px 30px -10px rgba(2, 12, 27, 0.7)';
+        header.style.height = '80px';
+    }
     
-    heroCard.addEventListener('mouseleave', () => {
-        heroCard.style.transform = 'translateY(0)';
-    });
-}
+    if (currentScroll > lastScroll && currentScroll > 100) {
+        header.style.top = '-100px';
+    } else {
+        header.style.top = '0';
+    }
+    lastScroll = currentScroll;
+});
