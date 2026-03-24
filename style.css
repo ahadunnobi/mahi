@@ -309,17 +309,16 @@ section {
 
 /* Contact Section Redesign */
 .contact-section {
-  height: 100vh;
-  padding: 0;
-  justify-content: space-between;
+  padding: 20px 0 0 0; /* Reduced top padding to kill the gap between projects and contact */
+  display: flex;
+  flex-direction: column;
 }
 
 .contact-content {
   text-align: center;
   max-width: 600px;
-  margin: auto;
-  padding-top: var(--header-height);
-  padding-bottom: 40px;
+  margin: 0 auto; /* no more margin auto for vertical centering */
+  padding-bottom: 60px;
 }
 
 .contact-content .title {
@@ -392,6 +391,8 @@ footer {
   .about-content {
     grid-template-columns: 1fr;
     gap: 30px;
+    display: flex;
+    flex-direction: column-reverse; /* Put image on top of description */
   }
 
   .profile-wrapper {
@@ -418,8 +419,8 @@ footer {
   }
   
   nav {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row; /* Keep Mahi and Links side by side */
+    justify-content: space-between;
     padding: 10px 0;
   }
   
