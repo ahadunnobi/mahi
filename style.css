@@ -141,6 +141,15 @@ section {
   padding-bottom: 40px;
 }
 
+.cursor {
+  animation: blink 1s step-end infinite;
+  color: var(--primary);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
 .hero .mono {
   font-family: var(--font-mono);
   color: var(--primary);
@@ -255,10 +264,37 @@ section {
   width: calc(33% - 20px);
   min-width: 250px;
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(100, 255, 218, 0.08), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
 }
 
 .project-header {
