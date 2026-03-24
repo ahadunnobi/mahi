@@ -1,59 +1,43 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-// Reveal elements on scroll
+// Reveal animations on scroll
 const observerOptions = {
-    threshold: 0.1
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.style.transform = 'translateY(0) scale(1)';
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.card, .skill-item').forEach(el => {
+document.querySelectorAll('.bento-item').forEach((el, index) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'all 0.6s ease-out';
+    el.style.transform = 'translateY(30px) scale(0.98)';
+    el.style.transition = `all 0.6s cubic-bezier(0.23, 1, 0.32, 1) ${index * 0.1}s`;
     observer.observe(el);
 });
 
-// Parallax effect for hero circles
-document.addEventListener('mousemove', (e) => {
-    const moveX = (e.clientX - window.innerWidth / 2) * 0.05;
-    const moveY = (e.clientY - window.innerHeight / 2) * 0.05;
+// Subtle tilt effect on mouse move for the hero card
+const heroCard = document.querySelector('.hero-card');
+if (heroCard) {
+    heroCard.addEventListener('mousemove', (e) => {
+        const rect = heroCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        heroCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+    });
     
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        // We can't easily move pseudo-elements with JS, but we can move a container
-        // For simplicity, let's just add a subtle tilt to the glass cards
-        document.querySelectorAll('.glass').forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            if (x > 0 && x < rect.width && y > 0 && y < rect.height) {
-                // Inside card
-                const rotateX = (y - rect.height / 2) / 20;
-                const rotateY = (x - rect.width / 2) / -20;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-            } else {
-                // Outside card - resetting to the scroll animation state if already visible
-                if (card.style.opacity === '1') {
-                    card.style.transform = 'translateY(0)';
-                }
-            }
-        });
-    }
-});
+    heroCard.addEventListener('mouseleave', () => {
+        heroCard.style.transform = 'translateY(0)';
+    });
+}
